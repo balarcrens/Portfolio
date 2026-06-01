@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/db.html
+# All user agents are welcome to crawl the index
+User-agent: *
+Allow: /
+
+# Private admin zones should be kept away from organic searches
+Disallow: /admin
+
+# Sitemap url
+Sitemap: https://crens.vercel.app/sitemap.xml

@@ -26,6 +26,33 @@ function App() {
         };
     }, []);
 
+    // Dynamic Title and Robots Index Management Side-Effect
+    useEffect(() => {
+        if (path === '/') {
+            document.title = 'Crens Balar | Full-Stack Developer Portfolio';
+        } else if (path === '/admin') {
+            document.title = 'Admin Workspace | Secure Portal';
+        } else {
+            document.title = '404 - Gravity Anomaly | Crens Balar';
+        }
+
+        let robotsMeta = document.querySelector('meta[name="robots"]');
+        if (path === '/admin' || (path !== '/' && path !== '/admin')) {
+            if (robotsMeta) {
+                robotsMeta.setAttribute('content', 'noindex, nofollow');
+            } else {
+                robotsMeta = document.createElement('meta');
+                robotsMeta.name = 'robots';
+                robotsMeta.content = 'noindex, nofollow';
+                document.head.appendChild(robotsMeta);
+            }
+        } else {
+            if (robotsMeta) {
+                robotsMeta.setAttribute('content', 'index, follow');
+            }
+        }
+    }, [path]);
+
     const navigate = (toPath) => {
         window.history.pushState({}, '', toPath);
         window.dispatchEvent(new Event('pushstate-change'));

@@ -190,6 +190,8 @@ export default function Navbar() {
                     <button
                         className="md:hidden text-white p-2 z-50 relative"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        aria-label="Toggle Navigation Menu"
+                        aria-expanded={isMobileMenuOpen}
                     >
                         <div className="w-6 h-5 flex flex-col justify-between">
                             <span className={`w-full h-[1px] bg-white transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-[10px]' : ''}`} />

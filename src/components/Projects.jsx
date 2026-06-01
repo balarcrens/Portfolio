@@ -1,18 +1,7 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import api from '../api';
-
-// Import our custom high-fidelity generated cyberpunk mockups
-import imgCartivoshop from '../assets/projects/cartivoshop.png';
-import imgIflexpdf from '../assets/projects/iflexpdf.png';
-import imgNexoranews from '../assets/projects/nexoranews.png';
-import imgHelpyzo from '../assets/projects/helpyzo.png';
-import imgRestaurantPos from '../assets/projects/restaurant_pos.png';
-import imgShreeexpress from '../assets/projects/shreeexpress.png';
-import imgMoviela from '../assets/projects/moviela.png';
-import imgFinalDestination from '../assets/projects/final_destination.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,7 +18,6 @@ const PROJECTS = [
             'PostgreSQL',
             'Tailwind CSS'
         ],
-        image: imgCartivoshop,
         link: 'https://cartivoshop.vercel.app',
         type: 'Full-Stack E-Commerce',
         role: 'Lead Full-Stack Developer',
@@ -63,7 +51,6 @@ const PROJECTS = [
             'Tailwind CSS',
             'Local Storage'
         ],
-        image: imgIflexpdf,
         link: 'https://iflexpdf.online',
         type: 'Web Utility Toolkit',
         role: 'Sole Architect & Developer',
@@ -98,7 +85,6 @@ const PROJECTS = [
             'MongoDB',
             'REST API'
         ],
-        image: imgNexoranews,
         link: 'https://nexoranews.netlify.app',
         type: 'Modern News Portal',
         role: 'Full-Stack Developer',
@@ -133,7 +119,6 @@ const PROJECTS = [
             'MongoDB',
             'Geo-Filtering'
         ],
-        image: imgHelpyzo,
         link: 'https://helpyzo.netlify.app',
         type: 'Services Marketplace',
         role: 'Lead Full-Stack Developer',
@@ -168,7 +153,6 @@ const PROJECTS = [
             'PostgreSQL',
             'Dashboard'
         ],
-        image: imgRestaurantPos,
         link: 'https://restaurant-pos-crens.vercel.app',
         type: 'Restaurant Management & POS',
         role: 'Full-Stack Developer',
@@ -203,7 +187,6 @@ const PROJECTS = [
             'MongoDB',
             'Audit Logging'
         ],
-        image: imgShreeexpress,
         link: 'https://shreexpresscourier.netlify.app',
         type: 'Courier & Logistics Tracker',
         role: 'Full-Stack Developer',
@@ -237,7 +220,6 @@ const PROJECTS = [
             'Vite',
             'Dynamic Search'
         ],
-        image: imgMoviela,
         link: 'https://moviela.vercel.app',
         type: 'Movie Discovery Interface',
         role: 'Frontend Architect',
@@ -270,7 +252,6 @@ const PROJECTS = [
             'MySQL',
             'Travel Booking'
         ],
-        image: imgFinalDestination,
         link: 'https://finaldestinationtour.vercel.app/',
         type: 'Travel Tour Booking Platform',
         role: 'Sole Architect & Developer',
@@ -294,22 +275,9 @@ const PROJECTS = [
     }
 ];
 
-const IMAGE_MAP = {
-    '01': imgCartivoshop,
-    '02': imgIflexpdf,
-    '03': imgNexoranews,
-    '04': imgHelpyzo,
-    '05': imgRestaurantPos,
-    '06': imgShreeexpress,
-    '07': imgMoviela,
-    '08': imgFinalDestination
-};
-
 const ProjectCard = ({ project }) => {
     const cardRef = useRef(null);
     const glowRef = useRef(null);
-    const imageRef = useRef(null);
-    const projectImage = IMAGE_MAP[project.id] || project.image || 'https://via.placeholder.com/600x400';
 
     const handleMouseMove = (e) => {
         if (!cardRef.current) return;
@@ -336,15 +304,6 @@ const ProjectCard = ({ project }) => {
             opacity: 1,
             duration: 0.2
         });
-
-        // Inverse parallax on the image inside
-        gsap.to(imageRef.current, {
-            x: -x * 20,
-            y: -y * 20,
-            scale: 1.1,
-            ease: 'power2.out',
-            duration: 0.4
-        });
     };
 
     const handleMouseLeave = () => {
@@ -360,14 +319,6 @@ const ProjectCard = ({ project }) => {
             opacity: 0,
             duration: 0.4
         });
-
-        gsap.to(imageRef.current, {
-            x: 0,
-            y: 0,
-            scale: 1.0,
-            ease: 'power3.out',
-            duration: 0.6
-        });
     };
 
     return (
@@ -378,17 +329,6 @@ const ProjectCard = ({ project }) => {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
         >
-            {/* Background Image Layer
-            <div className="absolute inset-0 z-0 overflow-hidden bg-zinc-900">
-                <img
-                    ref={imageRef}
-                    src={projectImage}
-                    alt={project.name}
-                    className={`absolute inset-0 w-full h-[120%] -top-[10%] object-cover object-center ${project.blend || 'mix-blend-screen opacity-70'} transition-all duration-[1.5s]`}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent z-10" />
-            </div> */}
-
             {/* Dynamic Hover Glow Layer Tracker */}
             <div
                 ref={glowRef}

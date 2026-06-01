@@ -1,0 +1,18 @@
+{
+  "name": "Crens Balar | Full-Stack Developer Portfolio",
+  "short_name": "Crens Portfolio",
+  "description": "Portfolio of Crens Pravinbhai Balar, a professional Full-Stack Developer specializing in the MERN and PERN stack.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030303",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
