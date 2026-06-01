@@ -259,23 +259,23 @@ export default function Hero() {
             />
 
             {/* Foreground UI Components */}
-            <div ref={textRef} className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-center mx-auto w-full max-w-[90rem] px-8 lg:px-16 mt-20">
+            <div ref={textRef} className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-center mx-auto w-full max-w-[90rem] px-8 lg:px-16 mt-12 md:mt-20">
                 <div
-                    className="w-full flex flex-col md:flex-row justify-between md:items-end transition-all duration-700 ease-out transform gap-10"
+                    className="w-full flex flex-col md:flex-row justify-between md:items-end transition-all duration-700 ease-out transform gap-6 md:gap-10"
                     style={{ transform: isHovered ? 'translateY(-20px)' : 'translateY(0px)' }}
                 >
 
                     {/* Left Side: Intro and Title */}
                     <div className="flex-1 max-w-lg lg:max-w-xl text-left">
-                        <p className="text-xs text-gray-300 font-medium tracking-widest uppercase mb-4 opacity-90">
+                        <p className="text-[10px] sm:text-xs text-gray-300 font-medium tracking-widest uppercase mb-2 md:mb-4 opacity-90">
                             Full-Stack Developer • MERN & PERN STACK
                         </p>
 
-                        <p className="text-sm md:text-base text-gray-300 font-medium tracking-widest uppercase mb-6 opacity-90 drop-shadow-md">
+                        <p className="text-xs sm:text-sm md:text-base text-gray-300 font-medium tracking-widest uppercase mb-3 md:mb-6 opacity-90 drop-shadow-md">
                             Hey, I'm Crens Balar
                         </p>
 
-                        <h1 className="text-2xl md:text-3xl lg:text-[1rem] xl:text-[3.5rem] font-bold tracking-tighter drop-shadow-2xl leading-[1.05] font-sans">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tighter drop-shadow-2xl leading-[1.05] font-sans">
                             Turning Ideas
                             <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500 font-serif italic font-light pr-2">
@@ -286,15 +286,15 @@ export default function Hero() {
                         </h1>
                     </div>
 
-                    <div className=" flex-1 max-w-md text-left md:text-right flex flex-col md:items-end">
-                        <p className="w-110 text-lg md:text-xl text-gray-300 drop-shadow-xl font-light tracking-wide leading-relaxed mb-8">
+                    <div className="flex-1 max-w-md text-left md:text-right flex flex-col md:items-end">
+                        <p className="w-full max-w-[440px] text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 drop-shadow-xl font-light tracking-wide leading-relaxed mb-6 md:mb-8">
                             Full-stack developer specializing in MERN and PERN technologies,
                             building fast, scalable, and visually engaging digital experiences.
                         </p>
 
                         <button
                             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="pointer-events-auto px-8 py-4 rounded-full border border-white/30 text-white text-sm tracking-[0.2em] uppercase font-medium hover:bg-white hover:text-black hover:border-white transition-all duration-500 backdrop-blur-sm shadow-xl inline-block cursor-pointer"
+                            className="pointer-events-auto px-6 py-3 sm:px-8 sm:py-4 rounded-full border border-white/30 text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium hover:bg-white hover:text-black hover:border-white transition-all duration-500 backdrop-blur-sm shadow-xl inline-block cursor-pointer"
                         >
                             Start a Project
                         </button>

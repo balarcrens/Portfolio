@@ -8,6 +8,7 @@ import FloatingSocials from './components/FloatingSocials';
 import BlackHole from './components/BlackHole';
 import AdminPanel from './components/AdminPanel';
 import NotFound from './components/NotFound';
+import ProgressBar from './components/ProgressBar';
 
 function App() {
     const [path, setPath] = useState(window.location.pathname);
@@ -67,6 +68,7 @@ function App() {
             <>
                 <Navbar />
                 <FloatingSocials />
+                <ProgressBar />
                 <Hero />
                 <About />
                 <Projects />
