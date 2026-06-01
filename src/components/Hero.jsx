@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { vertexShader, fragmentShader } from './HeroShaders';
 
 import imgIronman from '../assets/ironman/ironman.png';
-import imgMan from '../assets/man/man-bg.png';
+import imgMan from '../assets/man/crens.png';
 
 export default function Hero() {
     const containerRef = useRef(null);

@@ -7,6 +7,7 @@ import Contact from './components/Contact';
 import FloatingSocials from './components/FloatingSocials';
 import BlackHole from './components/BlackHole';
 import AdminPanel from './components/AdminPanel';
+import NotFound from './components/NotFound';
 
 function App() {
     const [path, setPath] = useState(window.location.pathname);
@@ -34,17 +35,22 @@ function App() {
         return <AdminPanel onNavigate={navigate} />;
     }
 
-    return (
-        <>
-            <Navbar />
-            <FloatingSocials />
-            <Hero />
-            <About />
-            <Projects />
-            <Contact />
-            <BlackHole />
-        </>
-    );
+    if (path === '/') {
+        return (
+            <>
+                <Navbar />
+                <FloatingSocials />
+                <Hero />
+                <About />
+                <Projects />
+                <Contact />
+                <BlackHole />
+            </>
+        );
+    }
+
+    // Intercept any invalid paths and pipe them into the Gravity Singularity 404 Vortex
+    return <NotFound onNavigate={navigate} />;
 }
 
 export default App;
