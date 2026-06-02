@@ -5,276 +5,6 @@ import api from '../api';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const PROJECTS = [
-    {
-        id: '01',
-        name: 'CartivoShop',
-        description:
-            'A full-stack e-commerce platform featuring secure authentication, product management, shopping cart functionality, order processing, and an intuitive shopping experience across all devices.',
-        tech: [
-            'React JS',
-            'Node JS',
-            'Express JS',
-            'PostgreSQL',
-            'Tailwind CSS'
-        ],
-        link: 'https://cartivoshop.vercel.app',
-        type: 'Full-Stack E-Commerce',
-        role: 'Lead Full-Stack Developer',
-        timeline: '3 Months (Q1 2026)',
-        challenge: 'Synchronizing shopping cart states across concurrent multi-user sessions and database locks during peak checkout orders without introducing layout render lag.',
-        solution: 'Developed transactional synchronization handlers in Express.js backed by strict index querying on PostgreSQL schemas, achieving sub-100ms response timelines.',
-        features: [
-            'Dynamic multi-role checkout admin controls panel',
-            'JWT encryption session session protection tokens',
-            'Responsive custom dashboard product inventory tracking',
-            'Fluid client-side invoice and billing receipts generator'
-        ],
-        stackFront: ['React JS', 'Tailwind CSS', 'Redux', 'GSAP'],
-        stackBack: ['Node JS', 'Express JS', 'RESTful API', 'JWT'],
-        stackDb: ['PostgreSQL Database', 'Sequelize ORM', 'SQL Indexing'],
-        stackDevOps: ['Vercel Cloud', 'Render APIs', 'GitHub Actions'],
-        metricPerf: '97%',
-        metricResp: '100%',
-        metricArch: '96%',
-        blend: 'mix-blend-screen opacity-70'
-    },
-
-    {
-        id: '02',
-        name: 'iFlexPDF',
-        description:
-            'A web-based PDF toolkit that allows users to merge, split, compress, convert, lock, unlock, and organize PDF documents through a secure and user-friendly interface.',
-        tech: [
-            'React JS',
-            'PDF Processing',
-            'Tailwind CSS',
-            'Local Storage'
-        ],
-        link: 'https://iflexpdf.online',
-        type: 'Web Utility Toolkit',
-        role: 'Sole Architect & Developer',
-        timeline: '2 Months (Q4 2025)',
-        challenge: 'Manipulating raw PDF binary documents directly in the user browser within strict memory ceilings to avoid tab crashes during split and compression processes.',
-        solution: 'Built client-side binary buffer pipeline managers powered by web worker threads and progressive garbage collection heap clearing.',
-        features: [
-            'High-efficiency progressive client-side file merging',
-            'Lossless file compression and optimization utilities',
-            'Secure document encryption locks and key managers',
-            'Drag-and-drop structural page reordering interface'
-        ],
-        stackFront: ['React JS', 'Tailwind CSS', 'Vite', 'Canvas API'],
-        stackBack: ['Browser Engine', 'Web Workers', 'Progressive Buffers'],
-        stackDb: ['IndexedDB Store', 'Browser LocalStorage'],
-        stackDevOps: ['Netlify Hosting', 'GitHub Actions', 'ESLint CI'],
-        metricPerf: '99%',
-        metricResp: '100%',
-        metricArch: '98%',
-        blend: 'mix-blend-screen opacity-70'
-    },
-
-    {
-        id: '03',
-        name: 'NexoraNews',
-        description:
-            'A modern news platform delivering categorized content, responsive layouts, optimized performance, and an engaging reading experience for users across devices.',
-        tech: [
-            'React JS',
-            'Node JS',
-            'Express JS',
-            'MongoDB',
-            'REST API'
-        ],
-        link: 'https://nexoranews.netlify.app',
-        type: 'Modern News Portal',
-        role: 'Full-Stack Developer',
-        timeline: '3 Months (Q3 2025)',
-        challenge: 'Maintaining high Core Web Vitals speeds (LCP & CLS) while handling thousands of search requests and asynchronous article catalog ingestion queries.',
-        solution: 'Implemented progressive dynamic DOM hydration, aggressive server-side debounced endpoints, and Redis caching blocks for frequent catalog queries.',
-        features: [
-            'Real-time article classification and tagging',
-            'Integrated OAuth authentication adapters (Google & GitHub)',
-            'Intuitive authoring dashboard rich-text workspace',
-            'Complete custom meta-tags header SEO config engine'
-        ],
-        stackFront: ['React JS', 'Tailwind CSS', 'Redux Toolkit', 'GSAP'],
-        stackBack: ['Node JS', 'Express JS', 'OAuth API', 'REST'],
-        stackDb: ['MongoDB Atlas', 'Mongoose schemas', 'Redis Cache'],
-        stackDevOps: ['Netlify CDN', 'Vercel Functions', 'GitHub CI'],
-        metricPerf: '95%',
-        metricResp: '98%',
-        metricArch: '95%',
-        blend: 'mix-blend-screen opacity-70'
-    },
-
-    {
-        id: '04',
-        name: 'Helpyzo',
-        description:
-            'A home services marketplace that connects customers with verified service professionals, including plumbers, electricians, technicians, and other local service providers.',
-        tech: [
-            'React JS',
-            'Node JS',
-            'Express JS',
-            'MongoDB',
-            'Geo-Filtering'
-        ],
-        link: 'https://helpyzo.netlify.app',
-        type: 'Services Marketplace',
-        role: 'Lead Full-Stack Developer',
-        timeline: '4 Months (Q2 2025)',
-        challenge: 'Building a responsive spatial geolocation search engine to query local service technicians in real time without causing slow database indexes queries.',
-        solution: 'Engineered optimized 2dsphere geospatial search parameters within MongoDB Atlas, feeding a reactive progressive service update schedule.',
-        features: [
-            'Marketplace geospatial proximity technician routing',
-            'Interactive scheduler for appointment slot bookings',
-            'Secure service worker profiles credential manager',
-            'Complete verified user feedback and ratings block'
-        ],
-        stackFront: ['React JS', 'Tailwind CSS', 'React Context API', 'Vite'],
-        stackBack: ['Node JS', 'Express JS', 'Geo-JSON REST APIs'],
-        stackDb: ['MongoDB Database', 'Mongoose Schemas', 'Geospatial Indexes'],
-        stackDevOps: ['Netlify Hosting', 'Heroku Cloud', 'GitHub CI'],
-        metricPerf: '96%',
-        metricResp: '100%',
-        metricArch: '94%',
-        blend: 'mix-blend-screen opacity-70'
-    },
-
-    {
-        id: '05',
-        name: 'Restaurant POS',
-        description:
-            'A restaurant management and point-of-sale system designed to streamline order processing, billing, menu management, and operational workflows.',
-        tech: [
-            'React JS',
-            'Node JS',
-            'Express JS',
-            'PostgreSQL',
-            'Dashboard'
-        ],
-        link: 'https://restaurant-pos-crens.vercel.app',
-        type: 'Restaurant Management & POS',
-        role: 'Full-Stack Developer',
-        timeline: '3 Months (Q1 2025)',
-        challenge: 'Ensuring transaction integrity during high-frequency peak hours on relational dining order tables, eliminating concurrency conflicts.',
-        solution: 'Designed robust database level transactional locking inside PostgreSQL tied with optimistic UI state rendering on the POS dashboard.',
-        features: [
-            'Highly interactive touchscreen point-of-sale layout',
-            'Optimistic offline transactional buffer caching',
-            'Real-time inventory ingredient depletion signals',
-            'Analytical visual sales and tax report charts'
-        ],
-        stackFront: ['React JS', 'Tailwind CSS', 'Chart.js', 'Vite'],
-        stackBack: ['Node JS', 'Express JS', 'REST APIs', 'JWT Tokens'],
-        stackDb: ['PostgreSQL DB', 'Sequelize ORM', 'Relational Lockings'],
-        stackDevOps: ['Vercel Cloud', 'Render Engine', 'GitHub Actions'],
-        metricPerf: '98%',
-        metricResp: '97%',
-        metricArch: '96%',
-        blend: 'mix-blend-screen opacity-70'
-    },
-
-    {
-        id: '06',
-        name: 'ShreeExpress',
-        description:
-            'A courier and logistics management platform providing shipment tracking, delivery management, customer records, and operational monitoring tools.',
-        tech: [
-            'React JS',
-            'Node JS',
-            'Express JS',
-            'MongoDB',
-            'Audit Logging'
-        ],
-        link: 'https://shreexpresscourier.netlify.app',
-        type: 'Courier & Logistics Tracker',
-        role: 'Full-Stack Developer',
-        timeline: '2.5 Months (Q4 2024)',
-        challenge: 'Managing tracking audit event logs across multiple courier transfer hubs without incurring database read and write blocks.',
-        solution: 'Structured a MongoDB event-driven document tracking collection utilizing progressive bulk updates and decoupled index logging.',
-        features: [
-            'Centralized dispatch parcel hub timeline auditing',
-            'Driver mobile panel quick check-in state switchers',
-            'Interactive client-facing shipment delivery map',
-            'Complete administration parcel reports metrics dashboard'
-        ],
-        stackFront: ['React JS', 'Tailwind CSS', 'Context API', 'GSAP'],
-        stackBack: ['Node JS', 'Express JS', 'Audit Log REST APIs'],
-        stackDb: ['MongoDB Atlas', 'Mongoose Schemas', 'Audit Indexes'],
-        stackDevOps: ['Netlify CDN', 'Render Hosting', 'GitHub Actions'],
-        metricPerf: '97%',
-        metricResp: '99%',
-        metricArch: '95%',
-        blend: 'mix-blend-screen opacity-70'
-    },
-
-    {
-        id: '07',
-        name: 'Moviela',
-        description:
-            'A movie discovery platform that enables users to explore movie information, ratings, categories, trending content, and detailed entertainment insights.',
-        tech: [
-            'React JS',
-            'Tailwind CSS',
-            'Vite',
-            'Dynamic Search'
-        ],
-        link: 'https://moviela.vercel.app',
-        type: 'Movie Discovery Interface',
-        role: 'Frontend Architect',
-        timeline: '2 Months (Q3 2024)',
-        challenge: 'Delivering buttery smooth micro-animations, lazy loading grids, and filters while integrating continuous TMDB REST APIs.',
-        solution: 'Built client-side search caching buffers, debounced input triggers, and utilized CSS hardware transforms via GSAP for animation timelines.',
-        features: [
-            'Premium cinematic glassmorphic dark-theme design',
-            'Debounced instant movie titles query system',
-            'Dynamic filter categories and catalog sorting grids',
-            'Rich media carousel preview details page overlay'
-        ],
-        stackFront: ['React JS', 'Tailwind CSS', 'GSAP Animations', 'Vite'],
-        stackBack: ['Node JS', 'Express API Proxy Adapters'],
-        stackDb: ['Browser Cache Engine', 'TMDB REST API Integration'],
-        stackDevOps: ['Vercel Cloud', 'GitHub CI/CD', 'ESLint Engine'],
-        metricPerf: '99%',
-        metricResp: '100%',
-        metricArch: '97%',
-        blend: 'mix-blend-screen opacity-70'
-    },
-    {
-        id: '08',
-        name: 'Final Destination Tour',
-        description:
-            'A tour and travel booking platform that allows users to explore destinations, browse tour packages, view travel details, and submit booking inquiries through a responsive and user-friendly interface.',
-        tech: [
-            'React JS',
-            'PHP',
-            'MySQL',
-            'Travel Booking'
-        ],
-        link: 'https://finaldestinationtour.vercel.app/',
-        type: 'Travel Tour Booking Platform',
-        role: 'Sole Architect & Developer',
-        timeline: '3 Months (Q2 2024)',
-        challenge: 'Designing a content-dense visual exploration grid with highly interactive scheduling and tour packages selection while keeping page sizes low.',
-        solution: 'Established clear MVC architecture separations under a PHP processing controller layer, coupled with indexed MySQL relational search queries.',
-        features: [
-            'Immersive layout destination search discovery cards',
-            'Asynchronous reservation booking pipeline triggers',
-            'Dynamic tour pricing search filter categories',
-            'Responsive custom contact and interactive booking form'
-        ],
-        stackFront: ['React JS', 'Tailwind CSS', 'Vanilla JavaScript', 'CSS Grid'],
-        stackBack: ['PHP Controller', 'REST API endpoints', 'MVC Pattern'],
-        stackDb: ['MySQL Database', 'SQL Query Index Optimizations'],
-        stackDevOps: ['Shared Cloud Web Host', 'Vercel APIs', 'Git Hooks'],
-        metricPerf: '96%',
-        metricResp: '100%',
-        metricArch: '95%',
-        blend: 'mix-blend-screen opacity-70'
-    }
-];
-
 const ProjectCard = ({ project }) => {
     const cardRef = useRef(null);
     const glowRef = useRef(null);
@@ -329,6 +59,7 @@ const ProjectCard = ({ project }) => {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
         >
+
             {/* Dynamic Hover Glow Layer Tracker */}
             <div
                 ref={glowRef}
@@ -387,7 +118,7 @@ const ProjectCard = ({ project }) => {
 export default function Projects() {
     const sectionRef = useRef(null);
     const headerRef = useRef(null);
-    const [activeProjects, setActiveProjects] = useState(PROJECTS);
+    const [activeProjects, setActiveProjects] = useState([]);
 
     useEffect(() => {
         const loadProjects = async () => {
@@ -397,7 +128,7 @@ export default function Projects() {
                     setActiveProjects(res.data.data);
                 }
             } catch (err) {
-                console.warn('[PROJECTS] Backend query offline. Loading local fallback project list.', err.message);
+                console.error('[PROJECTS] Backend query offline. Failed to load portfolio project dossier.', err.message);
             }
         };
         loadProjects();

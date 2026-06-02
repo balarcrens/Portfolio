@@ -23,12 +23,7 @@ export default function AdminPanel({ onNavigate }) {
         tech: '',
         image: '',
         link: '',
-        type: 'Web Application',
-        role: 'Full-Stack Developer',
-        timeline: '',
-        challenge: '',
-        solution: '',
-        features: ''
+        type: 'Web Application'
     });
 
     // Check token and fetch data on mount or token change
@@ -136,12 +131,10 @@ export default function AdminPanel({ onNavigate }) {
         setIsLoading(true);
 
         const techArray = formProject.tech.split(',').map(item => item.trim()).filter(Boolean);
-        const featuresArray = formProject.features.split('\n').map(item => item.trim()).filter(Boolean);
 
         const bodyData = {
             ...formProject,
-            tech: techArray,
-            features: featuresArray
+            tech: techArray
         };
 
         try {
@@ -158,12 +151,7 @@ export default function AdminPanel({ onNavigate }) {
                     tech: '',
                     image: '',
                     link: '',
-                    type: 'Web Application',
-                    role: 'Full-Stack Developer',
-                    timeline: '',
-                    challenge: '',
-                    solution: '',
-                    features: ''
+                    type: 'Web Application'
                 });
                 fetchProjects();
             } else {
@@ -185,12 +173,7 @@ export default function AdminPanel({ onNavigate }) {
             tech: (proj.tech || []).join(', '),
             image: proj.image || '',
             link: proj.link || '',
-            type: proj.type || 'Web Application',
-            role: proj.role || 'Full-Stack Developer',
-            timeline: proj.timeline || '',
-            challenge: proj.challenge || '',
-            solution: proj.solution || '',
-            features: (proj.features || []).join('\n')
+            type: proj.type || 'Web Application'
         });
         setIsFormOpen(true);
     };
@@ -203,12 +186,7 @@ export default function AdminPanel({ onNavigate }) {
             tech: '',
             image: '',
             link: '',
-            type: 'Web Application',
-            role: 'Full-Stack Developer',
-            timeline: '',
-            challenge: '',
-            solution: '',
-            features: ''
+            type: 'Web Application'
         });
         setIsFormOpen(true);
     };
@@ -523,29 +501,7 @@ export default function AdminPanel({ onNavigate }) {
                                 </div>
                             </div>
 
-                            {/* Row 2 */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <label className="text-xs font-mono uppercase tracking-wider text-gray-500">Developer Role</label>
-                                    <input
-                                        type="text"
-                                        value={formProject.role}
-                                        onChange={(e) => setFormProject({...formProject, role: e.target.value})}
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-red-500/50"
-                                        placeholder="e.g. Lead Developer"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-mono uppercase tracking-wider text-gray-500">Project Timeline</label>
-                                    <input
-                                        type="text"
-                                        value={formProject.timeline}
-                                        onChange={(e) => setFormProject({...formProject, timeline: e.target.value})}
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-red-500/50"
-                                        placeholder="e.g. 3 Months (Q1 2026)"
-                                    />
-                                </div>
-                            </div>
+
 
                             {/* Row 3 URLs */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -587,7 +543,7 @@ export default function AdminPanel({ onNavigate }) {
 
                             {/* Tech Stack comma sep */}
                             <div className="space-y-2">
-                                <label className="text-xs font-mono uppercase tracking-wider text-gray-500">Technology Stack (Comma separated) *</label>
+                                <label className="text-xs font-mono uppercase tracking-wider text-gray-500">Technology Stack Overview (Comma separated) *</label>
                                 <input
                                     type="text"
                                     value={formProject.tech}
@@ -598,41 +554,7 @@ export default function AdminPanel({ onNavigate }) {
                                 />
                             </div>
 
-                            {/* Problem / Challenge & Solution */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <label className="text-xs font-mono uppercase tracking-wider text-gray-500">Challenge faced</label>
-                                    <textarea
-                                        value={formProject.challenge}
-                                        onChange={(e) => setFormProject({...formProject, challenge: e.target.value})}
-                                        rows="3"
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-red-500/50 resize-none"
-                                        placeholder="Details of the technical challenges..."
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs font-mono uppercase tracking-wider text-gray-500">Solution engineered</label>
-                                    <textarea
-                                        value={formProject.solution}
-                                        onChange={(e) => setFormProject({...formProject, solution: e.target.value})}
-                                        rows="3"
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-red-500/50 resize-none"
-                                        placeholder="Details of the implemented solution..."
-                                    />
-                                </div>
-                            </div>
 
-                            {/* Features (One per line) */}
-                            <div className="space-y-2">
-                                <label className="text-xs font-mono uppercase tracking-wider text-gray-500">Core Features (One feature per line)</label>
-                                <textarea
-                                    value={formProject.features}
-                                    onChange={(e) => setFormProject({...formProject, features: e.target.value})}
-                                    rows="4"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-red-500/50 font-sans"
-                                    placeholder="e.g. JWT encryption protection keys&#10;Drag and drop structural pipeline"
-                                />
-                            </div>
 
                             {/* Buttons */}
                             <div className="flex items-center space-x-3 pt-6 border-t border-white/10">

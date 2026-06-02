@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Reuse our hero assets for the dual-identity mask effect prototype
-import imgSpiderman from '../assets/ironman/ironman_about.png';
+import imgSpiderman from '../assets/ironman/ironman_v2.png';
 import imgMan from '../assets/man/photo.png';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -14,8 +14,6 @@ export default function About() {
     const textContainerRef = useRef(null);
     const imageContainerRef = useRef(null);
     const maskRef = useRef(null);
-
-    const [mousePos, setMousePos] = useState({ x: 100, y: 100 });
 
     // 1. ScrollTrigger entrance animation
     useEffect(() => {
@@ -116,7 +114,7 @@ export default function About() {
                             '--y': '50%',
                             // The polygon logic simulates a circular spotlight reveal
                             // For a soft glowing edge, clip-path doesn't support blur inherently, but this acts perfectly as the mask.
-                            clipPath: 'circle(28% at var(--x) var(--y))',   
+                            clipPath: 'circle(28% at var(--x) var(--y))',
                             transition: 'clip-path 0.1s ease-out'
                         }}
                     >
