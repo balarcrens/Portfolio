@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Reuse our hero assets for the dual-identity mask effect prototype
-import imgSpiderman from '../assets/ironman/ironman_v2.png';
+import imgIronman from '../assets/ironman/ironman_v4.png';
 import imgMan from '../assets/man/photo.png';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -80,17 +80,14 @@ export default function About() {
         <section
             id='about'
             ref={sectionRef}
-            className="relative w-full min-h-screen bg-black flex items-center justify-center py-24 px-6 md:px-12 lg:px-24 overflow-hidden"
+            className="relative w-full min-h-screen bg-transparent flex items-center justify-center py-10 px-6 md:px-12 lg:px-24 overflow-hidden"
         >
-            {/* Background Ambience Layer */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/10 blur-[120px] rounded-full mix-blend-screen" />
                 <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMiIvPjwvc3ZnPg==')] opacity-30 mix-blend-overlay" />
             </div>
 
             <div className="max-w-[90rem] w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center relative z-10">
-
-                {/* Left Column: Interactive Portrait */}
                 <div
                     ref={imageContainerRef}
                     className="relative w-full aspect-[4/5] max-w-md mx-auto lg:max-w-none rounded-2xl overflow-hidden cursor-crosshair group shadow-2xl border border-white/5"
@@ -102,7 +99,7 @@ export default function About() {
                     <img
                         src={imgMan}
                         alt="Developer Persona"
-                        className="absolute inset-0 w-full h-full object-cover object-center grayscale opacity-60 mix-blend-luminosity brightness-75 transition-all duration-700 group-hover:scale-105"
+                        className="absolute inset-0 w-full h-full object-cover object-center scale-100 grayscale mix-blend-luminosity brightness-75 transition-all duration-700"
                     />
 
                     {/* Masked Overlay: Superhero Persona (Vibrant) */}
@@ -119,9 +116,9 @@ export default function About() {
                         }}
                     >
                         <img
-                            src={imgSpiderman}
+                            src={imgIronman}
                             alt="Hidden Superhero Persona"
-                            className="absolute inset-0 w-full h-full object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-[2s] ease-out"
+                            className="absolute inset-0 w-full h-full object-cover object-center scale-110 group-hover:scale-110 transition-transform duration-[2s] ease-out"
                         />
 
                         {/* Inner spotlight glow matched inside the mask */}
@@ -152,35 +149,7 @@ export default function About() {
                         </p>
                     </div>
 
-                    {/* Expertise Highlights */}
-                    <div className="overflow-hidden">
-                        <div className="stagger-reveal pt-4 border-t border-white/10 max-w-xl">
-                            <p className="text-xs uppercase tracking-[0.2em] text-red-500 font-mono mb-4 font-bold">[ Technical Expertise ]</p>
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-3">
-                                {[
-                                    "React JS",
-                                    "Node JS",
-                                    "Express JS",
-                                    "Tailwind CSS",
-                                    "HTML & CSS",
-                                    "JavaScript",
-                                    "Responsive Design",
-                                    "Attractive UIs",
-                                    "MongoDB",
-                                    "PostgreSQL",
-                                    "MERN Stack",
-                                    "PERN Stack"
-                                ].map((skill, i) => (
-                                    <div key={i} className="flex items-center space-x-2 group">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-red-500 group-hover:scale-125 transition-all duration-300" />
-                                        <span className="text-gray-400 text-xs md:text-sm font-medium tracking-wide uppercase group-hover:text-white transition-colors duration-300">
-                                            {skill}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div className="overflow-hidden mt-6">
                         <blockquote className="stagger-reveal border-l-2 border-red-500/50 pl-6 py-2">

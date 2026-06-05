@@ -9,6 +9,8 @@ import BlackHole from './components/BlackHole';
 import AdminPanel from './components/AdminPanel';
 import NotFound from './components/NotFound';
 import ProgressBar from './components/ProgressBar';
+import SpaceBackground from './components/SpaceBackground';
+import Skills from './components/Skills';
 
 function App() {
     const [path, setPath] = useState(window.location.pathname);
@@ -60,17 +62,24 @@ function App() {
     };
 
     if (path === '/admin') {
-        return <AdminPanel onNavigate={navigate} />;
+        return (
+            <>
+                <SpaceBackground />
+                <AdminPanel onNavigate={navigate} />
+            </>
+        );
     }
 
     if (path === '/') {
         return (
             <>
+                <SpaceBackground />
                 <Navbar />
                 <FloatingSocials />
                 <ProgressBar />
                 <Hero />
                 <About />
+                <Skills />
                 <Projects />
                 <Contact />
                 <BlackHole />
@@ -79,7 +88,12 @@ function App() {
     }
 
     // Intercept any invalid paths and pipe them into the Gravity Singularity 404 Vortex
-    return <NotFound onNavigate={navigate} />;
+    return (
+        <>
+            <SpaceBackground />
+            <NotFound onNavigate={navigate} />
+        </>
+    );
 }
 
 export default App;

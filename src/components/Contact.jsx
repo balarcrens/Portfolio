@@ -83,10 +83,10 @@ export default function Contact() {
         e.preventDefault();
         setStatus('sending');
         setErrorMessage('');
- 
+
         try {
             const res = await api.post('/contact', { name, email, message });
- 
+
             if (res.data.success) {
                 setStatus('success');
                 setName('');
@@ -109,7 +109,7 @@ export default function Contact() {
         <section
             id="contact"
             ref={sectionRef}
-            className="relative w-full min-h-screen bg-[#030303] flex items-center justify-center py-24 px-6 md:px-12 overflow-hidden"
+            className="relative w-full min-h-screen bg-transparent flex items-center justify-center py-10 px-6 md:px-12 overflow-hidden"
         >
             {/* Intense Background Glow */}
             <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-0">
@@ -146,7 +146,7 @@ export default function Contact() {
                                 className="peer w-full bg-white/5 border border-white/5 text-white text-base rounded-xl px-5 py-4 outline-none transition-all duration-300 focus:bg-white/10 focus:border-red-500/50 focus:shadow-[0_0_20px_rgba(239,68,68,0.2)] placeholder-transparent"
                                 placeholder="Name"
                             />
-                            <label htmlFor="name" className="absolute left-5 top-4 text-gray-500 text-base pointer-events-none transition-all duration-300 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-red-400 peer-valid:-top-3 peer-valid:text-xs peer-valid:text-gray-400 bg-[#030303] px-1 rounded">
+                            <label htmlFor="name" className="absolute left-5 top-4 text-gray-500 text-base pointer-events-none transition-all duration-300 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-red-400 peer-valid:-top-3 peer-valid:text-xs peer-valid:text-gray-400 bg-black px-1 rounded">
                                 Name
                             </label>
                         </div>
@@ -162,7 +162,7 @@ export default function Contact() {
                                 className="peer w-full bg-white/5 border border-white/5 text-white text-base rounded-xl px-5 py-4 outline-none transition-all duration-300 focus:bg-white/10 focus:border-red-500/50 focus:shadow-[0_0_20px_rgba(239,68,68,0.2)] placeholder-transparent"
                                 placeholder="Email"
                             />
-                            <label htmlFor="email" className="absolute left-5 top-4 text-gray-500 text-base pointer-events-none transition-all duration-300 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-red-400 peer-valid:-top-3 peer-valid:text-xs peer-valid:text-gray-400 bg-[#030303] px-1 rounded">
+                            <label htmlFor="email" className="absolute left-5 top-4 text-gray-500 text-base pointer-events-none transition-all duration-300 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-red-400 peer-valid:-top-3 peer-valid:text-xs peer-valid:text-gray-400 bg-black px-1 rounded">
                                 Email
                             </label>
                         </div>
@@ -179,7 +179,7 @@ export default function Contact() {
                             className="peer w-full bg-white/5 border border-white/5 text-white text-base rounded-xl px-5 py-4 outline-none transition-all duration-300 focus:bg-white/10 focus:border-red-500/50 focus:shadow-[0_0_20px_rgba(239,68,68,0.2)] placeholder-transparent resize-none"
                             placeholder="Message"
                         ></textarea>
-                        <label htmlFor="message" className="absolute left-5 top-4 text-gray-500 text-base pointer-events-none transition-all duration-300 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-red-400 peer-valid:-top-3 peer-valid:text-xs peer-valid:text-gray-400 bg-[#030303] px-1 rounded">
+                        <label htmlFor="message" className="absolute left-5 top-4 text-gray-500 text-base pointer-events-none transition-all duration-300 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-red-400 peer-valid:-top-3 peer-valid:text-xs peer-valid:text-gray-400 bg-black px-1 rounded">
                             Message
                         </label>
                     </div>

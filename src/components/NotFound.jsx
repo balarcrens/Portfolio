@@ -28,10 +28,9 @@ export default function NotFound({ onNavigate }) {
         camera.position.set(0, 8, 20);
         camera.lookAt(0, 0, 0);
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setClearColor(0x030303, 1);
         container.appendChild(renderer.domElement);
 
         // --- SINGULARITY CORE ---
@@ -307,7 +306,7 @@ export default function NotFound({ onNavigate }) {
     }, []);
 
     return (
-        <div className="relative w-full h-screen bg-[#030303] text-white overflow-hidden select-none font-sans flex items-center justify-center">
+        <div className="relative w-full h-screen bg-transparent text-white overflow-hidden select-none font-sans flex items-center justify-center">
             
             {/* 3D WebGL Canvas Layer */}
             <div ref={containerRef} className="absolute inset-0 z-0 pointer-events-auto" />

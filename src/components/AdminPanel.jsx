@@ -195,7 +195,7 @@ export default function AdminPanel({ onNavigate }) {
 
     if (!token) {
         return (
-            <div className="min-h-screen bg-[#030303] flex items-center justify-center py-12 px-6 overflow-hidden relative font-sans">
+            <div className="min-h-screen bg-transparent flex items-center justify-center py-12 px-6 overflow-hidden relative font-sans">
                 {/* Cybersecurity grid ambient background */}
                 <div className="absolute inset-0 pointer-events-none opacity-[0.03] z-0"
                     style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '60px 60px' }}
@@ -267,7 +267,7 @@ export default function AdminPanel({ onNavigate }) {
     }
 
     return (
-        <div className="min-h-screen bg-[#030303] text-gray-300 font-sans relative flex flex-col">
+        <div className="min-h-screen bg-transparent text-gray-300 font-sans relative flex flex-col">
             {/* Cybergrid ambient */}
             <div className="absolute inset-0 pointer-events-none opacity-[0.02] z-0"
                 style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '100px 100px' }}

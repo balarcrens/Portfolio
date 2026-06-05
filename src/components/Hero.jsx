@@ -1,284 +1,44 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { vertexShader, fragmentShader } from './HeroShaders';
-
-import imgIronman from '../assets/ironman/ironman.png';
-import imgMan from '../assets/man/crens.png';
 
 export default function Hero() {
-    const containerRef = useRef(null);
-    const cursorRef = useRef(null);
     const textRef = useRef(null);
-
-    // Create refs to hold things that need cleanup or updates
-    const uniformRef = useRef(null);
-    const mouseTarget = useRef({ x: 0.5, y: 0.5 });
-    const mouseCurrent = useRef({ x: 0.5, y: 0.5 });
-
-    const [isHovered, setIsHovered] = useState(false);
+    const terminalRef = useRef(null);
 
     useEffect(() => {
-        if (!containerRef.current) return;
+        // Entrance animations for both columns
+        const ctx = gsap.context(() => {
+            if (textRef.current) {
+                gsap.fromTo(textRef.current.children,
+                    { opacity: 0, y: 40 },
+                    { opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: "power3.out", delay: 0.3 }
+                );
+            }
 
-        const container = containerRef.current;
-
-        // Initial Hero Entrance Animation (AOS style smooth fade-up)
-        gsap.fromTo(container,
-            { opacity: 0, y: 80 },
-            { opacity: 1, y: 0, duration: 2, ease: "power3.out", delay: 0.1 }
-        );
-
-        // Text entrance animation (Fade down)
-        if (textRef.current) {
-            gsap.fromTo(textRef.current,
-                { opacity: 0, y: -60 },
-                { opacity: 1, y: 0, duration: 1.5, ease: "power3.out", delay: 0.8 }
-            );
-        }
-
-        // 1. Setup Three.js Scene
-        const scene = new THREE.Scene();
-
-        // We use an orthographic camera to map perfectly to a screen setup
-        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-        const renderer = new THREE.WebGLRenderer({
-            alpha: true,
-            antialias: true,
-            powerPreference: 'high-performance'
+            if (terminalRef.current) {
+                gsap.fromTo(terminalRef.current,
+                    { opacity: 0, x: 50, scale: 0.95 },
+                    { opacity: 1, x: 0, scale: 1, duration: 1.5, ease: "power3.out", delay: 0.6 }
+                );
+            }
         });
 
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-        renderer.setSize(width, height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-        container.appendChild(renderer.domElement);
-
-        // 2. Load textures
-        const textureLoader = new THREE.TextureLoader();
-        let isTexturesLoaded = false;
-
-        // Define uniforms up front so they can be mutated
-        const uniforms = {
-            uTexture1: { value: null },
-            uTexture2: { value: null }, // Man
-            uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-            uHovered: { value: 0.0 }, // 0 to 1 value smoothly handled by GSAP
-            uRadius: { value: 0.22 },
-            uSoftness: { value: 0.08 },
-            uScale: { value: 0.0 },
-            uResolution: { value: new THREE.Vector2(width, height) },
-            uImageResolution: { value: new THREE.Vector2(1920, 1080) } // Assuming 16:9 for default
-        };
-
-        uniformRef.current = uniforms;
-
-        Promise.all([
-            textureLoader.loadAsync(imgIronman),
-            textureLoader.loadAsync(imgMan)
-        ]).then(([tex1, tex2]) => {
-            // Improve texture visual quality
-            tex1.generateMipmaps = false;
-            tex1.minFilter = THREE.LinearFilter;
-            tex1.magFilter = THREE.LinearFilter;
-
-            tex2.generateMipmaps = false;
-            tex2.minFilter = THREE.LinearFilter;
-            tex2.magFilter = THREE.LinearFilter;
-
-            uniforms.uTexture1.value = tex1;
-            uniforms.uTexture2.value = tex2;
-
-            // Update image resolution based on the first loaded texture's actual dimensions
-            if (tex1.image) {
-                uniforms.uImageResolution.value.set(tex1.image.width, tex1.image.height);
-            }
-
-            isTexturesLoaded = true;
-        });
-
-        // 3. Create full-screen plane geometry and shader material
-        const geometry = new THREE.PlaneGeometry(2, 2);
-        const material = new THREE.ShaderMaterial({
-            vertexShader,
-            fragmentShader,
-            uniforms
-        });
-
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-
-        // 4. Set up Intersection Observer to pause rendering when out of viewport
-        let isVisible = true;
-        const observer = new IntersectionObserver(([entry]) => {
-            isVisible = entry.isIntersecting;
-        }, { threshold: 0.05 });
-        observer.observe(container);
-
-        // GSAP Ticker for render loop and smooth lerping
-        const renderTick = () => {
-            if (!isTexturesLoaded || !isVisible) return;
-
-            // Lerp the mouse coordinates smoothly
-            mouseCurrent.current.x = gsap.utils.interpolate(mouseCurrent.current.x, mouseTarget.current.x, 0.1);
-            mouseCurrent.current.y = gsap.utils.interpolate(mouseCurrent.current.y, mouseTarget.current.y, 0.1);
-
-            uniforms.uMouse.value.set(mouseCurrent.current.x, mouseCurrent.current.y);
-
-            // Also update DOM custom cursor position if needed
-            if (cursorRef.current) {
-                gsap.set(cursorRef.current, {
-                    x: mouseCurrent.current.x * width,
-                    y: mouseCurrent.current.y * height, // using normalized, so 0 top wait...
-                    // Actually threejs UV y is 0 bottom, 1 top. But our uMouse is updated below. Let's fix cursor DOM below.
-                });
-            }
-
-            renderer.render(scene, camera);
-        };
-
-        gsap.ticker.add(renderTick);
-
-        // 5. Setup interaction event handlers
-        const onMouseMove = (e) => {
-            const rect = container.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / width;
-            // In Three.js UV space, Y=0 is bottom, Y=1 is top.
-            const y = 1.0 - ((e.clientY - rect.top) / height);
-
-            mouseTarget.current.x = x;
-            mouseTarget.current.y = y;
-
-            // For DOM cursor, use standard coordinates
-            if (cursorRef.current) {
-                // Just store regular pixel coords in DOM cursor directly for zero latency, 
-                // to have a quick cursor overlay if desired
-                gsap.to(cursorRef.current, {
-                    x: e.clientX,
-                    y: e.clientY,
-                    duration: 0.1,
-                    ease: "power2.out"
-                });
-            }
-        };
-
-        const onMouseEnter = () => {
-            setIsHovered(true);
-            gsap.to(uniforms.uHovered, {
-                value: 1.0,
-                duration: 1.2,
-                ease: "power3.out"
-            });
-            if (cursorRef.current) {
-                gsap.to(cursorRef.current, { scale: 1, opacity: 1, duration: 0.3 });
-            }
-        };
-
-        const onMouseLeave = () => {
-            setIsHovered(false);
-            gsap.to(uniforms.uHovered, {
-                value: 0.0,
-                duration: 1.2,
-                ease: "power3.out"
-            });
-            if (cursorRef.current) {
-                gsap.to(cursorRef.current, { scale: 0, opacity: 0, duration: 0.3 });
-            }
-        };
-
-        container.addEventListener('mousemove', onMouseMove);
-        container.addEventListener('mouseenter', onMouseEnter);
-        container.addEventListener('mouseleave', onMouseLeave);
-
-        // 6. Handle resize
-        const onResize = () => {
-            const w = container.clientWidth;
-            const h = container.clientHeight;
-            renderer.setSize(w, h);
-            uniforms.uResolution.value.set(w, h);
-        };
-
-        window.addEventListener('resize', onResize);
-
-        // Mobile fallback (Tap)
-        const onTouch = (e) => {
-            if (e.touches.length > 0) {
-                const touch = e.touches[0];
-                const rect = container.getBoundingClientRect();
-                mouseTarget.current.x = (touch.clientX - rect.left) / width;
-                mouseTarget.current.y = 1.0 - ((touch.clientY - rect.top) / height);
-
-                // Toggle hover effect on touch
-                if (!isHovered) {
-                    onMouseEnter();
-                }
-            }
-        };
-
-        container.addEventListener('touchstart', onTouch);
-        container.addEventListener('touchmove', onTouch);
-
-        // 7. Cleanup
-        return () => {
-            gsap.ticker.remove(renderTick);
-            observer.disconnect();
-            window.removeEventListener('resize', onResize);
-            container.removeEventListener('mousemove', onMouseMove);
-            container.removeEventListener('mouseenter', onMouseEnter);
-            container.removeEventListener('mouseleave', onMouseLeave);
-            container.removeEventListener('touchstart', onTouch);
-            container.removeEventListener('touchmove', onTouch);
-
-            container.removeChild(renderer.domElement);
-            renderer.dispose();
-            material.dispose();
-            geometry.dispose();
-            // NOTE: should realistically dispose textures too 
-        };
+        return () => ctx.revert();
     }, []);
 
     return (
-        <div className="relative w-screen h-screen overflow-hidden bg-black flex items-center justify-center">
-            {/* Three.js Canvas Container */}
-            <div
-                ref={containerRef}
-                className="absolute inset-0 z-0 select-none"
-            />
-
-            {/* Custom Cursor / Light Bloom Overlay */}
-            <div
-                ref={cursorRef}
-                className="fixed top-0 left-0 w-32 h-32 rounded-full pointer-events-none z-20 mix-blend-screen opacity-0 scale-0"
-                style={{
-                    background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)',
-                    transform: 'translate(-50%, -50%)' // Center the glow on the mouse point
-                }}
-            />
-
-            {/* Foreground UI Components */}
-            <div ref={textRef} className="absolute inset-0 z-10 pointer-events-none flex flex-col justify-center mx-auto w-full max-w-[90rem] px-8 lg:px-16 mt-12 md:mt-20">
-                <div
-                    className="w-full flex flex-col md:flex-row justify-between md:items-end transition-all duration-700 ease-out transform gap-6 md:gap-10"
-                    style={{ transform: isHovered ? 'translateY(-20px)' : 'translateY(0px)' }}
-                >
-
-                    {/* Left Side: Intro and Title */}
-                    <div className="flex-1 max-w-lg lg:max-w-xl text-left">
-                        <p className="text-[10px] sm:text-xs text-gray-300 font-medium tracking-widest uppercase mb-2 md:mb-4 opacity-90">
-                            Full-Stack Developer • MERN & PERN STACK
+        <div className="relative w-screen min-h-screen overflow-hidden bg-transparent flex items-center justify-center py-10 px-6 md:px-12 lg:px-24">
+            <div className="max-w-[70rem] w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10">
+                <div ref={textRef} className="lg:col-span-7 flex flex-col justify-center text-left space-y-6">
+                    <div className="space-y-4">
+                        <p className="text-xs sm:text-sm text-gray-400 font-medium tracking-[0.2em] uppercase">
+                            Hey, I'm Crens Pravinbhai Balar
                         </p>
 
-                        <p className="text-xs sm:text-sm md:text-base text-gray-300 font-medium tracking-widest uppercase mb-3 md:mb-6 opacity-90 drop-shadow-md">
-                            Hey, I'm Crens Balar
-                        </p>
-
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tighter drop-shadow-2xl leading-[1.05] font-sans">
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-white font-sans">
                             Turning Ideas
                             <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-500 font-serif italic font-light pr-2">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-white font-serif italic font-light pr-2">
                                 Into Digital
                             </span>
                             <br />
@@ -286,26 +46,71 @@ export default function Hero() {
                         </h1>
                     </div>
 
-                    <div className="flex-1 max-w-md text-left md:text-right flex flex-col md:items-end">
-                        <p className="w-full max-w-[440px] text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 drop-shadow-xl font-light tracking-wide leading-relaxed mb-6 md:mb-8">
-                            Full-stack developer specializing in MERN and PERN technologies,
-                            building fast, scalable, and visually engaging digital experiences.
-                        </p>
+                    <p className="max-w-xl text-base sm:text-lg text-gray-400 font-light tracking-wide leading-relaxed">
+                        Full-stack developer specializing in MERN and PERN technologies, building fast, scalable, and visually engaging digital experiences. Let's architect the future together.
+                    </p>
 
+                    <div className="flex flex-wrap gap-4 pt-4">
                         <button
                             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="pointer-events-auto px-6 py-3 sm:px-8 sm:py-4 rounded-full border border-white/30 text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-medium hover:bg-white hover:text-black hover:border-white transition-all duration-500 backdrop-blur-sm shadow-xl inline-block cursor-pointer"
+                            className="px-8 py-4 rounded-full border border-red-500/30 text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-bold hover:bg-red-500 hover:border-red-500 hover:text-white transition-all duration-500 backdrop-blur-sm shadow-xl inline-block cursor-pointer"
                         >
                             Start a Project
                         </button>
+                        <button
+                            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                            className="px-8 py-4 rounded-full border border-white/10 hover:border-white/20 text-gray-300 hover:text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-bold transition-all duration-500 backdrop-blur-sm shadow-xl inline-block cursor-pointer bg-white/5"
+                        >
+                            Explore Work
+                        </button>
                     </div>
-
                 </div>
-            </div>
 
-            {/* Overlay border/frame for cinematic effect */}
-            <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/50 to-transparent z-10 pointer-events-none" />
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 to-transparent z-10 pointer-events-none" />
+                <div className="lg:col-span-5 w-full flex justify-center">
+                    <div
+                        ref={terminalRef}
+                        className="w-full max-w-md bg-black/60 border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] backdrop-blur-md"
+                        style={{ fontFamily: 'monospace' }}
+                    >
+                        <div className="bg-white/5 px-4 py-3 flex items-center justify-between border-b border-white/5 select-none">
+                            <div className="flex space-x-2">
+                                <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                                <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                                <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                            </div>
+                            <span className="text-[10px] text-gray-500 font-semibold tracking-wider">
+                                crens@balar: ~
+                            </span>
+                            <div className="w-6 h-3" />
+                        </div>
+
+                        <div className="p-6 text-xs text-left space-y-4 font-mono select-none overflow-x-auto no-scrollbar">
+                            <div className="space-y-1">
+                                <p className="text-gray-500">
+                                    crens@balar:~$ <span className="text-white">cat profile.json</span>
+                                </p>
+                                <div className="pl-4 border-l border-white/5 text-gray-400 space-y-0.5">
+                                    <p>{"{"}</p>
+                                    <p>  <span className="text-red-400">"name"</span>: <span className="text-orange-300">"Crens Pravinbhai Balar"</span>,</p>
+                                    <p>  <span className="text-red-400">"role"</span>: <span className="text-orange-300">"Full-Stack Developer"</span>,</p>
+                                    <p>  <span className="text-red-400">"specialization"</span>: <span className="text-orange-300">["MERN", "PERN"]</span>,</p>
+                                    <p>  <span className="text-red-400">"frontend"</span>: <span className="text-orange-300">["React", "Next.js"]</span>,</p>
+                                    <p>  <span className="text-red-400">"backend"</span>: <span className="text-orange-300">["Node.js", "Express"]</span>,</p>
+                                    <p>  <span className="text-red-400">"database"</span>: <span className="text-orange-300">["PostgreSQL", "MongoDB", "MySQL"]</span>,</p>
+                                    <p>  <span className="text-red-400">"hosting"</span>: <span className="text-orange-300">["Vercel", "Render", "Hostinger", "Netlify"]</span>,</p>
+                                    <p>  <span className="text-red-400">"availability"</span>: <span className="text-emerald-400">"Open to Projects"</span></p>
+                                    <p>{"}"}</p>
+                                </div>
+                            </div>
+
+                            <p className="text-white animate-pulse">
+                                crens@balar:~$ <span className="inline-block w-1.5 h-3 bg-red-500 align-middle"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     );
 }

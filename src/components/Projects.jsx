@@ -81,7 +81,7 @@ const ProjectCard = ({ project }) => {
                     {project.name}
                 </h3>
 
-                <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-4 font-light max-w-[95%] line-clamp-3">
+                <p className="text-gray-400 text-sm md:text-md leading-relaxed mb-4 font-light max-w-[95%] line-clamp-3">
                     {project.description}
                 </p>
 
@@ -170,7 +170,7 @@ export default function Projects() {
         <section
             id="projects"
             ref={sectionRef}
-            className="w-full min-h-screen bg-[#030303] py-32 px-6 md:px-12 lg:px-24 flex flex-col justify-center relative overflow-hidden"
+            className="w-full min-h-screen bg-transparent py-10 px-6 md:px-12 lg:px-24 flex flex-col justify-center relative overflow-hidden"
         >
             <div className="max-w-[90rem] mx-auto w-full relative z-10">
 
