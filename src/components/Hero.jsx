@@ -27,7 +27,7 @@ export default function Hero() {
     }, []);
 
     return (
-        <div className="relative w-screen min-h-screen overflow-hidden bg-transparent flex items-center justify-center py-10 px-6 md:px-12 lg:px-24">
+        <div className="relative w-screen min-h-screen overflow-hidden bg-transparent flex items-center justify-center pt-25 md:pt-10 pb-10 px-6 md:px-12 lg:px-24">
             <div className="max-w-[70rem] w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10">
                 <div ref={textRef} className="lg:col-span-7 flex flex-col justify-center text-left space-y-6">
                     <div className="space-y-4">
