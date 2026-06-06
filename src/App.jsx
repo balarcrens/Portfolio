@@ -11,6 +11,7 @@ import NotFound from './components/NotFound';
 import ProgressBar from './components/ProgressBar';
 import SpaceBackground from './components/SpaceBackground';
 import Skills from './components/Skills';
+import Footer from './components/Footer';
 
 function App() {
     const [path, setPath] = useState(window.location.pathname);
@@ -83,6 +84,7 @@ function App() {
                 <Projects />
                 <Contact />
                 <BlackHole />
+                <Footer />
             </>
         );
     }
