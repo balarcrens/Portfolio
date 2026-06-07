@@ -115,9 +115,39 @@ const ProjectCard = ({ project }) => {
     );
 };
 
+const ProjectSkeleton = () => {
+    return (
+        <div className="relative w-full h-[450px] rounded-xl overflow-hidden bg-black/40 border border-white/5 p-8 flex flex-col justify-end select-none">
+            {/* Dossier Code placeholder */}
+            <div className="w-24 h-4 bg-white/5 rounded animate-pulse mb-3" />
+            
+            {/* Title placeholder */}
+            <div className="w-3/4 h-8 bg-white/10 rounded animate-pulse mb-4" />
+            
+            {/* Description lines placeholder */}
+            <div className="space-y-2 mb-6">
+                <div className="w-full h-3.5 bg-white/5 rounded animate-pulse" />
+                <div className="w-5/6 h-3.5 bg-white/5 rounded animate-pulse" />
+                <div className="w-2/3 h-3.5 bg-white/5 rounded animate-pulse" />
+            </div>
+            
+            {/* Tech tags placeholder */}
+            <div className="flex flex-wrap gap-2 mb-6">
+                <div className="w-16 h-7 bg-white/5 rounded-full animate-pulse" />
+                <div className="w-20 h-7 bg-white/5 rounded-full animate-pulse" />
+                <div className="w-14 h-7 bg-white/5 rounded-full animate-pulse" />
+            </div>
+            
+            {/* Link button placeholder */}
+            <div className="w-28 h-5 bg-white/5 rounded animate-pulse mt-auto" />
+        </div>
+    );
+};
+
 export default function Projects() {
     const sectionRef = useRef(null);
     const headerRef = useRef(null);
+    const [loading, setLoading] = useState(true);
     const [activeProjects, setActiveProjects] = useState([]);
 
     useEffect(() => {
@@ -129,6 +159,8 @@ export default function Projects() {
                 }
             } catch (err) {
                 console.error('[PROJECTS] Backend query offline. Failed to load portfolio project dossier.', err.message);
+            } finally {
+                setLoading(false);
             }
         };
         loadProjects();
@@ -187,10 +219,20 @@ export default function Projects() {
                 </div>
 
                 {/* Grid Container */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-12 place-items-center">
-                    {activeProjects.map(project => (
-                        <ProjectCard key={project.id} project={project} />
-                    ))}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-12 place-items-center w-full">
+                    {loading ? (
+                        Array.from({ length: 3 }).map((_, idx) => (
+                            <ProjectSkeleton key={idx} />
+                        ))
+                    ) : activeProjects.length > 0 ? (
+                        activeProjects.map(project => (
+                            <ProjectCard key={project.id} project={project} />
+                        ))
+                    ) : (
+                        <div className="col-span-full py-16 text-center border border-white/5 bg-black/20 rounded-xl w-full">
+                            <p className="text-red-500 font-mono text-xs tracking-widest uppercase">SYSTEM STATUS: PROJECT DOSSIER OFFLINE</p>
+                        </div>
+                    )}
                 </div>
 
             </div>

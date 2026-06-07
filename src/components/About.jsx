@@ -159,6 +159,19 @@ export default function About() {
                             </p>
                         </blockquote>
                     </div>
+
+                    <div className="stagger-reveal mt-8">
+                        <a
+                            href="/resume.pdf"
+                            download="Crens_Balar_Resume.pdf"
+                            className="px-8 py-4 rounded-full border border-red-500/30 text-white text-xs sm:text-sm tracking-[0.2em] uppercase font-bold hover:bg-red-500 hover:border-red-500 hover:text-white transition-all duration-500 backdrop-blur-sm shadow-xl inline-flex items-center justify-center gap-3 cursor-pointer"
+                        >
+                            <span>Download My Resume</span>
+                            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

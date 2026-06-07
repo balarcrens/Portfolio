@@ -13,7 +13,7 @@ const NAV_LINKS = [
 const SOCIAL_LINKS = [
     {
         name: 'GitHub',
-        href: 'https://github.com/crensbalar',
+        href: 'https://github.com/balarcrens',
         icon: (
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
@@ -22,7 +22,7 @@ const SOCIAL_LINKS = [
     },
     {
         name: 'LinkedIn',
-        href: 'https://linkedin.com/in/crensbalar',
+        href: 'https://linkedin.com/in/crens-b-2b5076375',
         icon: (
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path fillRule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clipRule="evenodd" />
@@ -31,7 +31,7 @@ const SOCIAL_LINKS = [
     },
     {
         name: 'Twitter',
-        href: 'https://x.com/crensbalar',
+        href: 'https://x.com/BalarCrens07',
         icon: (
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -40,7 +40,7 @@ const SOCIAL_LINKS = [
     },
     {
         name: 'Email',
-        href: 'mailto:crensbalar@gmail.com',
+        href: 'mailto:balarcrens@gmail.com',
         icon: (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -149,9 +149,22 @@ export default function Navbar() {
                     >
                         {/* Minimalist modern tech-monogram 'C' SVG Logo */}
                         <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-white transition-transform duration-500 group-hover:scale-110">
-                            <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="2" strokeDasharray="6 4" className="opacity-40" />
-                            <path d="M68 35C62 25 48 22 38 28C26 35 22 52 30 65C38 78 55 81 65 72" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
-                            <path d="M48 50H72" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="opacity-60 group-hover:translate-x-1 transition-transform" />
+                            <defs>
+                                <linearGradient id="nav-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stopColor="#ef4444" />
+                                    <stop offset="100%" stopColor="#f97316" />
+                                </linearGradient>
+                                <filter id="nav-glow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="3" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <circle cx="50" cy="50" r="44" stroke="currentColor" strokeWidth="1.5" strokeDasharray="8 6" className="opacity-30" />
+                            <path d="M68 28C60 18 45 16 34 24C20 33 16 52 26 67C36 82 56 84 68 72" stroke="url(#nav-logo-grad)" strokeWidth="7" strokeLinecap="round" filter="url(#nav-glow)" />
+                            <path d="M42 50H72" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" className="opacity-80 group-hover:translate-x-1 transition-transform duration-300" />
                         </svg>
                         <span className="text-white font-bold tracking-widest uppercase text-sm ml-2 opacity-90 group-hover:opacity-100 transition-opacity">
                             Crens
@@ -235,6 +248,19 @@ export default function Navbar() {
                     >
                         Hire Me
                     </button>
+
+                    <a
+                        href="/resume.pdf"
+                        download="Crens_Balar_Resume.pdf"
+                        ref={el => mobileLinksRef.current[NAV_LINKS.length + 2] = el}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="mt-2 px-8 py-3 rounded-full border border-white/10 bg-white/5 text-gray-300 tracking-widest hover:border-red-500/30 hover:text-white flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer"
+                    >
+                        <span>Download Resume</span>
+                        <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        </svg>
+                    </a>
 
                     {/* Mobile Socials Tray */}
                     <div

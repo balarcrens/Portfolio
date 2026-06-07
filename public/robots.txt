@@ -2,6 +2,7 @@
 # All user agents are welcome to crawl the index
 User-agent: *
 Allow: /
+Allow: /resume.pdf
 
 # Private admin zones should be kept away from organic searches
 Disallow: /admin
